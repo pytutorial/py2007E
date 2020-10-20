@@ -15,6 +15,17 @@ def index(request):
     categoryId = int(categoryId) if categoryId else None
     if categoryId:
         productList = productList.filter(category__id=categoryId)
+    
+    priceId = request.GET.get('priceId')
+    priceId = int(priceId) if priceId else None
+    price = priceList[priceId-1] if priceId else {}
+    minPrice, maxPrice = price.get('min'), price.get('max')
+    print(price)
+    if minPrice: 
+        productList = productList.filter(price__gte=minPrice)
+
+    if maxPrice:
+        productList = productList.filter(price__lte=maxPrice)
             
     categoryList = Category.objects.all()
     context = {
@@ -23,6 +34,7 @@ def index(request):
         'productList': productList,
         'name': name,
         'categoryId': categoryId,
+        'priceId': priceId,
     }
     return render(request, 'index.html', context)
 
