@@ -1,0 +1,37 @@
+<form>
+  <input name="name" value="{{name}}" 
+    placeholder="Nhập tên sản phẩm để tìm">
+</form>
+<table style="width:100%" border="1">
+  <thead>
+    <tr>
+      <th>#</th>
+      <th>Mã</th>
+      <th>Tên</th>
+    </tr>
+  </thead>
+  <tbody>
+    {%for p in productList%}
+      <tr>
+        <td>{{forloop.counter|add:start}}</td>
+        <td>{{p.code}}</td>
+        <td>{{p.name}}</td>
+      </tr>
+    {%endfor%}
+  </tbody>
+</table>
+<a href="/?page=1&name={{name}}">First</a>
+{% if page > 1 %}
+  <a href="/?page={{page|add:-1}}&name={{name}}">Prev</a>
+{%else%}
+  <span>Prev</span>
+{%endif%}
+
+{% if page < num_page %}
+  <a href="/?page={{page|add:1}}&name={{name}}">Next</a>
+{%else%}
+  <span>Next</span>
+{%endif%}
+
+<a href="/?page={{num_page}}&name={{name}}">Last</a>
+<p>{{total}} records</p>
