@@ -1,5 +1,4 @@
 from django import forms
-
 class OrderForm(forms.Form):
     qty = forms.IntegerField()
     fullname = forms.CharField()
