@@ -6,7 +6,7 @@
 {% block menu %}
 <nav class="navbar navbar-expand-lg navbar-dark bg-primary p-0">
   <div class="navbar-nav">
-    <a class="nav-item nav-link {%if page == 1%} active {%endif%}" href="{% url 'list-category' %}">Quản lý nhóm sản phẩm</a>
+    <a class="nav-item nav-link {%if page == 1%} active {%endif%}" href="{% url 'staff-home' %}">Quản lý nhóm sản phẩm</a>
     <a class="nav-item nav-link {%if page == 2%} active {%endif%}" href="{% url 'list-product' %}">Quản lý sản phẩm</a>
   </div>
 
@@ -20,7 +20,7 @@
           Thông tin tài khoản
         </a>
         <div class="dropdown-divider"></div>
-        <a class="dropdown-item" href="#">
+        <a class="dropdown-item" href="/accounts/logout">
           Đăng xuất
         </a>
       </div>
