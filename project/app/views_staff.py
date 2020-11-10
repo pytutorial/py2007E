@@ -43,20 +43,19 @@ def listProduct(request):
     return render(request,
         'staff/product/list.html', context)  
 
-@login_required
-def createProduct(request):
-    form = ProductForm()
-    if request.method == 'POST':
-        form = ProductForm(request.POST, request.FILES)
-        if form.is_valid():
-            form.save()
-            return redirect('list-product')
-    return render(request, 'staff/product/form.html',
-                {'form': form})
+@method_decorator(login_required, name='dispatch')
+class ProductCreateView(CreateView):
+    model = Product
+    fields = '__all__'
+    success_url = '/staff/list-product'
+    template_name = 'staff/product/form.html'
 
-@login_required
-def updateProduct(request, pk):
-    return render(request, 'staff/product/form.html')
+@method_decorator(login_required, name='dispatch')
+class ProductUpdateView(UpdateView):
+    model = Product
+    fields = '__all__'
+    success_url = '/staff/list-product'
+    template_name = 'staff/product/form.html'
 
 @login_required
 def deleteProduct(request, pk):

@@ -10,7 +10,7 @@ urlpatterns = [
   path('delete-category/<pk>', deleteCategory, name='delete-category'),
 
   path('list-product', listProduct, name='list-product'),
-  path('create-product', createProduct, name='create-product'),
-  path('update-product/<pk>', updateProduct, name='update-product'),
+  path('create-product', ProductCreateView.as_view(), name='create-product'),
+  path('update-product/<pk>', ProductUpdateView.as_view(), name='update-product'),
   path('delete-product/<pk>', deleteProduct, name='delete-product'),
 ]

@@ -27,7 +27,13 @@
           <td>{{p.name}}</td>
           <td>{{p.category.name}}</td>
           <td>{{p.price}} triệu</td>
-          <td></td>
+          <td>
+            <a href='{% url "update-product" p.id %}' 
+              class="btn btn-sm btn-primary">Chỉnh sửa</a>
+              
+            <a href='javascript:deleteProduct({{p.id}})' 
+               class="btn btn-sm btn-danger">Xóa</a>
+          </td>
         </tr>
         {%endfor%}
       </tbody>
@@ -35,4 +41,12 @@
     <a href='/staff/create-product'
       class="btn btn-primary">Thêm sản phẩm</a>
   </div>
+
+  <script>
+    function deleteProduct(id) {
+      if(confirm('Bạn có chắc chắn muốn xóa?')){
+        location.href = '/staff/delete-product/' + id;
+      }
+    }
+  </script>
 {% endblock %}
