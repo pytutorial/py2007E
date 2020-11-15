@@ -32,3 +32,7 @@ class Order(models.Model):
     deliver_date = models.DateTimeField(null=True)
     status = models.IntegerField()
 
+    @property
+    def total(self):
+        return self.qty * self.product.price
+

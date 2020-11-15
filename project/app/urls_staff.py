@@ -15,4 +15,5 @@ urlpatterns = [
   path('delete-product/<pk>', deleteProduct, name='delete-product'),
 
   path('list-order', listOrder, name='list-order'),
+  path('view-order/<pk>', viewOrder, name='view-order'),
 ]
