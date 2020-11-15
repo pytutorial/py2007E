@@ -128,3 +128,5 @@ STATICFILES_DIRS = [
 
 LOGIN_REDIRECT_URL = 'staff-home'
 LOGOUT_REDIRECT_URL = 'staff-home'
+
+USE_L10N=False

@@ -1,6 +1,7 @@
-from django.shortcuts import render
-
+from django.shortcuts import render, redirect
+from datetime import datetime
 from .models import *
+from .forms import *
 
 priceList = [
     {'id': 1, 'name': 'Dưới 5 triệu', 'max': 5},
@@ -42,3 +43,28 @@ def viewProductDetail(request, pk):
     product = Product.objects.get(pk=pk)
     context = {'product': product}
     return render(request, 'product.html', context)
+
+def orderProduct(request, pk):
+    product = Product.objects.get(pk=pk)
+    form = OrderForm(initial={'qty': 1})
+
+    if request.method == 'POST':
+        form = OrderForm(request.POST)
+        if form.is_valid():
+            data = form.cleaned_data
+            order = Order()
+            order.product = product
+            order.qty = data['qty']
+            order.customer_name = data['customer_name']
+            order.customer_phone = data['customer_phone']
+            order.customer_address = data['customer_address']
+            order.order_date = datetime.now()
+            order.status = Order.Status.NEW
+            order.save()
+            return redirect('/thank-you')
+
+    context = {'form': form, 'product': product}
+    return render(request, 'order.html', context)
+
+def thank_you(request):
+    return render(request, 'thank_you.html')

@@ -1,0 +1,43 @@
+<!--app/templates/staff/order.html-->
+{% extends "../base.html" %}
+
+{% block menu %} 
+  {% with page=3 %}
+    {{block.super}}
+  {% endwith %}
+{% endblock %}
+
+{% block content %}
+<div class="container pt-3"> 
+  <table class="table">
+    <thead>
+      <tr>
+        <th>STT</th>
+        <th>Sản phẩm</th>
+        <th>Số lượng</th>
+        <th>Khách hàng</th>
+        <th>Ngày mua hàng</th>
+        <th>Trạng thái</th>
+        <th></th>
+      </tr>
+    </thead>
+    <tbody>
+      {% for o in orderList %}
+        <tr>
+          <td>{{forloop.counter}}</td>
+          <td>{{o.product.name}}</td>
+          <td>{{o.qty}}</td>
+          <td>{{o.customer_name}}({{o.customer_phone}})</td>
+          <td>{{o.order_date|date:"d/m/Y H:i:s"}}</td>
+          <td>
+            {% if o.status == 0 %} Mới {%endif%}
+            {% if o.status == 1 %} Đã giao hàng {%endif%}
+            {% if o.status == 2 %} Đã hủy {%endif%}
+          </td>
+          <td></td>
+        </tr>
+      {%endfor%}
+    </tbody>
+  </table>
+</div>
+{% endblock %}

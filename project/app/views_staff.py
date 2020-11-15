@@ -60,3 +60,9 @@ class ProductUpdateView(UpdateView):
 @login_required
 def deleteProduct(request, pk):
     return redirect('list-product')
+
+@login_required
+def listOrder(request):
+    orderList = Order.objects.all()
+    context = {'orderList': orderList}
+    return render(request, 'staff/order/list.html', context)    
