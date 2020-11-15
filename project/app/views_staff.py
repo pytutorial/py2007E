@@ -5,6 +5,9 @@ from .forms import *
 from django.views.generic.edit import CreateView, UpdateView
 from django.contrib.auth.decorators import login_required
 from django.utils.decorators import method_decorator
+from datetime import datetime
+from django.conf import settings
+import math
 
 @login_required
 def staffHome(request):
@@ -63,8 +66,23 @@ def deleteProduct(request, pk):
 
 @login_required
 def listOrder(request):
+    page = request.GET.get('page', '')
+    page = int(page) if page.isdigit() else 1
+    pageSize = settings.PAGE_SIZE
+    start = (page-1) * pageSize
+    end = start + pageSize   
+    
     orderList = Order.objects.all()
-    context = {'orderList': orderList}
+    orderList = orderList.order_by('status', '-order_date')
+    total = orderList.count()
+    
+    context = {
+        'orderList': orderList[start:end],
+        'start': start,
+        'page': page,
+        'total': total,
+        'numpage': math.ceil(total/pageSize)
+    }
     return render(request, 'staff/order/list.html', context)    
 
 @login_required
@@ -73,3 +91,18 @@ def viewOrder(request, pk):
     context = {'order': order}
     return render(request, 'staff/order/detail.html', context)
     
+
+@login_required
+def confirmOrderDeliver(request, pk):
+    order = Order.objects.get(pk=pk)
+    order.status = Order.Status.DELIVERED
+    order.deliver_date = datetime.now()
+    order.save()
+    return redirect('list-order')
+
+@login_required
+def cancelOrder(request, pk):
+    order = Order.objects.get(pk=pk)
+    order.status = Order.Status.CANCELED
+    order.save()
+    return redirect('list-order')

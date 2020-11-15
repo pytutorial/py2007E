@@ -70,11 +70,11 @@
     <div class="mb-3">
       {% if order.status == 0 %}      
         <a class="btn btn-primary mr-1"
-        href='/staff/confirm-order-deliver/{{order.id}}'>
+        href='javascript:confirmOrderDeliver({{order.id}})'>
           Xác nhận đã giao hàng
         </a>
         <a class="btn btn-danger mr-1" 
-          href='/staff/cancel-order/{{order.id}}'>
+          href='javascript:cancelOrder({{order.id}})'>
           Hủy đơn hàng
         </a>    
       {% endif %}
@@ -82,4 +82,16 @@
        href='/staff/list-order'>Quay lại</a>
     </div>
   </div>
+  <script>
+    function confirmOrderDeliver(id) {
+      if(confirm('Xác nhận đơn hàng đã được giao?')) {
+        location.href = '/staff/confirm-order-deliver/' + id;
+      }
+    }
+    function cancelOrder(id) {
+      if(confirm('Hủy đơn hàng này?')) {
+        location.href = '/staff/cancel-order/' + id;
+      }
+    }
+  </script>
 {% endblock %}

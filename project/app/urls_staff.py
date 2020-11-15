@@ -16,4 +16,6 @@ urlpatterns = [
 
   path('list-order', listOrder, name='list-order'),
   path('view-order/<pk>', viewOrder, name='view-order'),
+  path('confirm-order-deliver/<pk>', confirmOrderDeliver),
+  path('cancel-order/<pk>', cancelOrder),
 ]
