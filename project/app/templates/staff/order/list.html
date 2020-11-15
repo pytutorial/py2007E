@@ -34,7 +34,9 @@
             {% if o.status == 1 %} Đã giao hàng {%endif%}
             {% if o.status == 2 %} Đã hủy {%endif%}
           </td>
-          <td></td>
+          <td>
+            <a href="/staff/view-order/{{o.id}}">Xem</a>
+          </td>
         </tr>
       {%endfor%}
     </tbody>
